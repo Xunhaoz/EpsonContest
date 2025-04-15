@@ -1,7 +1,7 @@
-from typing import Annotated
 from dotenv import load_dotenv
 
 from components.login_component.LoginComponent import LoginComponent
+from components.index_component.IndexComponent import IndexComponent
 from authorization.user import get_user_tokens
 
 import uvicorn
@@ -13,7 +13,10 @@ load_dotenv()
 app = FastAPI()
 
 login_component = LoginComponent()
+index_component = IndexComponent()
+
 login_component.mount(app, url="/login")
+index_component.mount(app, url="")
 
 
 @app.middleware("login_checker")
@@ -24,11 +27,6 @@ async def add_process_time_header(request: Request, call_next):
         return RedirectResponse(url='/login')
     response = await call_next(request)
     return response
-
-
-@app.get('/')
-def index():
-    return "Hello World!"
 
 
 @app.get('/callback')
