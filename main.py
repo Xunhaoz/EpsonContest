@@ -16,17 +16,22 @@ login_component = LoginComponent()
 index_component = IndexComponent()
 
 login_component.mount(app, url="/login")
-index_component.mount(app, url="")
+index_component.mount(app, url="/index")
 
 
 @app.middleware("login_checker")
 async def add_process_time_header(request: Request, call_next):
-    white_list = ['/login', '/callback']
+    white_list = ['/login', '/callback', '/robots.txt']
     access_token = request.cookies.get('access_token')
     if access_token is None and not any(request.url.path.startswith(_) for _ in white_list):
-        return RedirectResponse(url='/login')
+        return RedirectResponse(url='/login/')
     response = await call_next(request)
     return response
+
+
+@app.get('/')
+def root():
+    return RedirectResponse(url='/index/')
 
 
 @app.get('/callback')

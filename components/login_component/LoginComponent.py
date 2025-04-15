@@ -13,7 +13,7 @@ class LoginComponent:
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
                 if (cookie.indexOf('access_token=') === 0) {
-                    window.location.href = '/';
+                    window.location.href = '/index';
                     return true;
                 }
             }
@@ -64,7 +64,8 @@ class LoginComponent:
         with gr.Blocks(fill_height=True, head=self.js) as self.login_page:
             gr.Image(
                 "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-                show_label=False, height='50vh', show_download_button=False, show_fullscreen_button=False, container=False)
+                show_label=False, height='50vh', show_download_button=False, show_fullscreen_button=False,
+                container=False)
             gr.Button("Epson Connect 登入", link=link)
 
     def mount(self, app, url):
