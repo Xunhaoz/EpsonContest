@@ -16,7 +16,6 @@ def get_user_tokens(request: Request):
     encoded_credentials = base64.b64encode(credentials.encode()).decode()
     headers = {
         'Authorization': f'Basic {encoded_credentials}',
-        'Content-Type': 'application/x-www-form-urlencoded'
     }
 
     data = {
@@ -28,5 +27,4 @@ def get_user_tokens(request: Request):
     resp = requests.post(os.getenv('TOKEN_URL'), headers=headers, data=data)
     resp.raise_for_status()
     tokens = resp.json()
-    tokens['expires_at'] = tokens['expires_in'] + int(time.time()) - 60
     return tokens

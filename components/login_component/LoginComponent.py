@@ -12,8 +12,8 @@ class LoginComponent:
     
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
-                if (cookie.indexOf('user=') === 0) {
-                    window.location.href = '/gradio';
+                if (cookie.indexOf('access_token=') === 0) {
+                    window.location.href = '/';
                     return true;
                 }
             }
