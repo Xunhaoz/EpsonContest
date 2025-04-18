@@ -49,24 +49,35 @@ class LoginComponent:
             }
         }
     </script>
+    
+    <style>
+    .gradio-container {
+      background-color: #404040  !important;
+    }
+    
+    #epson_connect_login {
+        font-size: 50px;
+    }
+    
+    </style>
     """
 
     def __init__(self, client_id: str = None, redirect_uri: str = None, scope: str = None, auth_url: str = None):
         auth_params = {
             "response_type": 'code',
             "client_id": client_id or os.getenv('CLIENT_ID'),
-            "redirect_uri": redirect_uri or os.getenv('REDIRECT_URI'),
+            "redirect_uri": f'{redirect_uri or os.getenv('DOMAIN')}/callback',
             "scope": scope or os.getenv('SCOPE')
         }
 
         link = f"{auth_url or os.getenv('AUTH_URL')}?{urlencode(auth_params)}"
 
-        with gr.Blocks(fill_height=True, head=self.js) as self.login_page:
+        with gr.Blocks(fill_height=True, head=self.js, css="{background-color: #404040;}") as self.login_page:
             gr.Image(
-                "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-                show_label=False, height='50vh', show_download_button=False, show_fullscreen_button=False,
+                "static/login.jpg",
+                show_label=False, height='70vh', show_download_button=False, show_fullscreen_button=False,
                 container=False)
-            gr.Button("Epson Connect 登入", link=link)
+            gr.Button("Epson Connect Login", link=link, elem_id='epson_connect_login')
 
     def mount(self, app, url):
         return gr.mount_gradio_app(app, self.login_page, path=url)
