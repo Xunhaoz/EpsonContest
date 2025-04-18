@@ -19,17 +19,17 @@ class IndexComponent:
                     gr.Image(
                         'static/cut_paste_cover.jpg', elem_classes="gallery_cover",
                         container=False, show_label=False, show_download_button=False, show_fullscreen_button=False)
-                    gr.Button("查看更多!!", link="/coloring_gallery")
+                    gr.Button("View More!!", link="/coloring_gallery")
                 with gr.Column():
                     gr.Image(
                         'static/coloring_cover.jpg', elem_classes="gallery_cover",
                         container=False, show_label=False, show_download_button=False, show_fullscreen_button=False)
-                    gr.Button("查看更多!!", link="/collage_gallery")
+                    gr.Button("View More!!", link="/collage_gallery")
                 with gr.Column():
                     gr.Image(
                         'static/worksheet_cover.jpg', elem_classes="gallery_cover",
                         container=False, show_label=False, show_download_button=False, show_fullscreen_button=False)
-                    gr.Button("查看更多!!", link="/huge_poster_creation")
+                    gr.Button("View More!!", link="/huge_poster_creation")
 
             gr.Button("體驗生成式人工智慧!!", link="/generative_ai")
 
