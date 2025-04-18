@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 from components.login_component.LoginComponent import LoginComponent
 from components.index_component.IndexComponent import IndexComponent
 from components.coloring_gallery_component.coloring_gallery_component import ColoringGalleryComponent
+from components.work_sheet_component.work_sheet_component import WorkSheetComponent
+from components.cut_paste_component.cut_paste_component import CutPasteComponent
 from components.generative_ai_component.generative_ai_component import GenerativeAiComponent
 from components.collect_painting_component.collect_painting_component import CollectPaintingComponent
 from authorization.user import get_user_tokens, get_user_printer, check_user_scanner
@@ -18,8 +20,9 @@ app = FastAPI()
 LoginComponent().mount(app, url="/login")
 IndexComponent().mount(app, url="/index")
 GenerativeAiComponent().mount(app, url="/generative_ai")
-ColoringGalleryComponent().mount(app, url="/coloring_gallery")
-
+ColoringGalleryComponent().mount(app, url="/coloring")
+CutPasteComponent().mount(app, url="/cut_paste")
+WorkSheetComponent().mount(app, url="/worksheet")
 
 # @app.middleware("login_checker")
 # async def add_process_time_header(request: Request, call_next):

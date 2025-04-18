@@ -21,12 +21,11 @@ class GenerativeAiComponent:
     def __init__(self):
         with gr.Blocks() as self.generative_ai_page:
             gr.Markdown("# Epson Innovation Challenge 2025 創新大賽")
-            with gr.Row():
+            with gr.Row(equal_height=True):
                 with gr.Column():
-                    image = gr.Image(label="生成的圖片", interactive=False, height='1000px', show_download_button=True)
+                    image = gr.Image(label="生成的圖片", interactive=False, show_download_button=True, height="80vh")
                 with gr.Column():
-                    chatbot = gr.Chatbot(elem_id="chatbot", type="messages", autoscroll=True, height='850px')
-
+                    chatbot = gr.Chatbot(elem_id="chatbot", type="messages", autoscroll=True, height="60vh")
                     chat_input = gr.MultimodalTextbox(
                         file_count="single",
                         placeholder="Enter message or upload file...",

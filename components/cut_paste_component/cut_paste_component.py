@@ -4,13 +4,13 @@ from pathlib import Path
 import gradio as gr
 
 
-class ColoringGalleryComponent:
+class CutPasteComponent:
     def __init__(self):
         with gr.Blocks(fill_height=True) as self.index_page:
-            gr.Image('static/ColoringBanner.png', container=False, show_label=False, show_download_button=False,
+            gr.Image('static/CutPasteBanner.png', container=False, show_label=False, show_download_button=False,
                      show_fullscreen_button=False)
             with gr.Row():
-                for image in list(Path('static/coloring').rglob('*.jpg')) + list(Path('static/coloring').rglob('*.png')):
+                for image in Path('static/cut_paste').rglob('*.png'):
                     with gr.Column():
                         gr.Image(image, height='30vh', label=image.stem)
                         with gr.Accordion("Open for Prompt!", open=False):
