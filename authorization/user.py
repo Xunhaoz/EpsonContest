@@ -45,10 +45,10 @@ def check_user_scanner(access_token: str):
         'x-api-key': os.getenv('API_KEY'),
     }
     url = 'https://api.epsonconnect.com/api/2/scanning/destinations'
-
     response = requests.get(url, headers=headers).json()
-    if any(_['destination'] == f"{os.getenv('DOMAIN')}/scanning_destinations" for _ in response['destinations']):
-        return
+
+    for payload in response['destinations']:
+        requests.delete(f"{url}/{payload['destinationId']}", headers=headers)
 
     payload = {
         "aliasName": "demoWebsite", "destinationService": "url",

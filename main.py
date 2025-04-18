@@ -1,29 +1,24 @@
-from typing import Annotated
 from dotenv import load_dotenv
 
 from components.login_component.LoginComponent import LoginComponent
 from components.index_component.IndexComponent import IndexComponent
 from components.coloring_gallery_component.coloring_gallery_component import ColoringGalleryComponent
 from components.generative_ai_component.generative_ai_component import GenerativeAiComponent
+from components.collect_painting_component.collect_painting_component import CollectPaintingComponent
 from authorization.user import get_user_tokens, get_user_printer, check_user_scanner
 
 import uvicorn
-from fastapi import FastAPI, Request, UploadFile, File
+from fastapi import FastAPI, Request, Cookie
 from fastapi.responses import RedirectResponse, HTMLResponse, Response
 
 load_dotenv()
 
 app = FastAPI()
 
-login_component = LoginComponent()
-index_component = IndexComponent()
-generative_ai_component = GenerativeAiComponent()
-coloring_gallery_component = ColoringGalleryComponent()
-
-login_component.mount(app, url="/login")
-index_component.mount(app, url="/index")
-coloring_gallery_component.mount(app, url="/coloring_gallery")
-generative_ai_component.mount(app, url="/generative_ai")
+LoginComponent().mount(app, url="/login")
+IndexComponent().mount(app, url="/index")
+GenerativeAiComponent().mount(app, url="/generative_ai")
+ColoringGalleryComponent().mount(app, url="/coloring_gallery")
 
 
 # @app.middleware("login_checker")
@@ -38,7 +33,13 @@ generative_ai_component.mount(app, url="/generative_ai")
 
 @app.get('/')
 def root():
-    return RedirectResponse(url='/index/')
+    return RedirectResponse(url='/index')
+
+
+@app.get('/collect_painting')
+async def redirect_upload_page(image_name: str, access_token:str = Cookie(None)):
+    CollectPaintingComponent(image_name, access_token).mount(app, url=f'/{image_name}')
+    return RedirectResponse(url=f'/{image_name}')
 
 
 @app.get('/callback')
