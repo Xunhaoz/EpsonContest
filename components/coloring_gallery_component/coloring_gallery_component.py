@@ -10,7 +10,7 @@ class ColoringGalleryComponent:
             gr.Image('static/ColoringBanner.png', container=False, show_label=False, show_download_button=False,
                      show_fullscreen_button=False)
             with gr.Row():
-                for image in list(Path('static/coloring').rglob('*.jpg')) + list(Path('static/coloring').rglob('*.png')):
+                for image in list(Path('static/coloring').rglob('*.png')) + list(Path('static/coloring').rglob('*.jpg')):
                     with gr.Column():
                         gr.Image(image, height='30vh', label=image.stem)
                         with gr.Accordion("Open for Prompt!", open=False):

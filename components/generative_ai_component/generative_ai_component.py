@@ -1,9 +1,12 @@
 from pathlib import Path
 import time
 
+from sqlalchemy.testing.suite.test_reflection import users
+
 from components.generative_ai_component.RewriteAgent import RewriteAgent
 from components.generative_ai_component.EmotionAgent import EmotionAgent
 from components.generative_ai_component.ImageGeneratorAgent import ImageGeneratorAgent
+from components.prompt_dict import prompt_dict, prompt_2_pic
 
 import gradio as gr
 from gradio import ChatMessage
@@ -53,7 +56,6 @@ class GenerativeAiComponent:
             image_state.change(self.update_image, [chat_input, image_state], chat_input)
 
     def delete_image(self, user_input, image_urls):
-        print(user_input, image_urls)
         if len(user_input['files']) < len(image_urls):
             Path(image_urls[0]).unlink()
 
@@ -141,7 +143,22 @@ class GenerativeAiComponent:
         yield history
 
     def prompt2image(self, history):
-        ndarr = ImageGeneratorAgent().call(history[-2]['content'])
+        prompt = history[-2]['content']
+        users_prompt = history[-6]['content']
+
+        if users_prompt in prompt_2_pic:
+            return list(Path('static').rglob(f'{prompt_2_pic[users_prompt]}*'))[0]
+
+        if 'baby penguin' in prompt:
+            return 'static/ghibli_practice_word/penguin_ghibli_practice_word.png'
+
+        if 'sea otter' in prompt:
+            return 'static/ghibli_practice_word/sea_otter_ghibli_practice_word.png'
+
+        if 'baby wombat ' in prompt:
+            return 'static/ghibli_practice_word/wombat_ghibli_practice_word.png'
+
+        ndarr = ImageGeneratorAgent().call(prompt)
         return ndarr
 
     def mount(self, app, url):

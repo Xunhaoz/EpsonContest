@@ -49,3 +49,5 @@ prompt_dict = {
     "Wombat": "A black-and-white cartoon-style educational coloring page for kids, showing a curious baby wombat crouching near its mother, surrounded by twigs and grass in a natural Australian setting. The drawing uses clean, soft lines in a Ghibli-inspired style, designed for young learners to explore wildlife vocabulary and coloring practice.",
     "Penguin": "A black-and-white cartoon-style educational coloring page for kids, featuring a cheerful baby penguin standing on snowy Antarctic ground with two other penguins in the background. The main penguin is facing forward with one flipper raised, drawn in a soft Ghibli-inspired style with expressive eyes and simple outlines, ideal for use in English animal vocabulary lessons.",
 }
+
+prompt_2_pic = {value: key for key, value in prompt_dict.items()}
